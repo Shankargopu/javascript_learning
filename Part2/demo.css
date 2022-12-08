@@ -1,0 +1,43 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(255, 255,255);
+   
+}
+
+main{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+   
+   
+}
+h1{
+    padding: 1rem 2rem;
+    background-color: #333;
+    color: white;
+    border-radius: 1rem;
+}
+
+
+
+.btn-submit{
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    border: none;
+    outline: none;
+    transition: background 0.4s;
+}
+
+.btn-submit:hover{
+ background: rgb(215, 214, 214);
+}

@@ -1,0 +1,150 @@
+
+ JS always compile before executing
+ It heps in 
+
+ 1) Early Error checking
+ 2) Determining appropriate scope for varaible.
+
+ In compilation phase there are 3 phases
+ 1 phase)
+ Tokenizing/Lexing : In this phase code is divided into smaller chunks 
+
+ 2 phase)
+ Parsing : In this phase By using smaller chunks than AST(abstract syntax tree) will be made.
+
+ 3 phase)
+ code Generator : In thses phase executable code will be generated from AST.
+
+How code of JS will be executed:
+
+In JS code executes inside execution context
+
+Global execution context: 
+2phases
+1 phase) creation phase.
+
+In this phase The global varaibles will be set.
+
+This keyword
+if it is executing in browsert than this keyword will be window else it will be different
+
+if any Global scope varaible present like var varaibles
+
+1)console.log(this)
+2)console.log(firstName)
+3)var firstName = "shankar"
+4)console.log(firstName)
+
+from above snippet the global memory contains after compiledIif is running in browser).
+window:{}
+firstName:undefined
+this:window
+
+2 phase ) code execution phase
+ line by line
+1) window object will be printed
+2) undefined
+3) firstName will be shankar
+4) shankar will be printed
+
+
+In case of function declaration
+
+
+1)console.log(this)
+2)console.log(window)
+3)console.log(myFunction)
+4)console.log(fullName)
+
+5)function myFunction(){
+    console.log("this is my function")
+}
+
+6)var fName="bhavani"
+7)var lName="shankar"
+8)var fullName = fName + " " +lName
+9)console.log(fullName)
+
+analyizing above code
+
+1) In compiling phase:
+         javascript aware of the scope of varaible. so, 
+           In Global scope we will have. fName, lName,fullName, function myFunction()
+
+2) In code execution phase:
+     Global execution will be created. It will add to the stack Data structure. after completion of all the
+     code execution the global execution context will be poppedup.
+
+    i)In creation Phase:
+         Global memory will be created. in Global memory we will have:
+          even before creation of execution context . we will have window object provided by browser. after execution
+    context created the window object will be binded to the this {}. so from above code the following will be added
+    to the Global memory.
+         window:{}, 
+         this : window,
+         fName : undefined,
+         lName : undefined,
+         myFunction (the full function definition will be stored)
+    after Global execution context creation phase complted than it moves 
+
+    ii)In code execution Phase: 
+       line by line 
+       1)this object will be printed (window)
+       2)window object will be printed
+       3)the full function definition will be printed
+       4)undefined will be printed
+       6) fName updated from undefined to bhavani
+       7) lName updated from undefined to shankar
+       8) fullName = bhavani+''+shankar
+       9) bhavani shankar will be printed
+
+//hositing: This behaviour of varaibles, function can be accessed before there execution is known as hositing.
+hositing is happening because in global execution context before code execution phase,i.e, in the creation
+phase varaibles and functions will be stored in global memory. so they are accessible even before executing.
+
+In case of function Expression.
+
+1)console.log(myFunction)
+2)var myFunction = function(){
+    console.log("this is my function")
+}
+3) console.log(myFunction)
+
+
+
+I)In compile phase: 
+javascript aware of the scope of varaible. so, In
+Global scope : myFunction
+
+II)in exectuion phase:
+global exectuion context : 1) creation Phase   2) code exectuion phase
+Global execution will be created. It will add to the stack Data structure. after completion of all the
+     code execution the global execution context will be poppedup.
+i) creation Phase : Global memory created .
+Global memory stores the 
+ function : undefined (because it is declared with var)
+
+ii)exectuion phase line by line:
+   1) undefined
+   2) function is printed
+
+ 
+ 
+   In case of let and const:
+
+   1)console.log(myFunction)
+   2)console.log(fName)
+   3)let myFunction = function(){
+    console.log("this is my function")
+    }
+   4)let fName = "shankar"
+  5) console.log(myFunction)
+
+  i)in compiling phase: scope will of varaible will be decided.
+  ii) in code exectuion phase
+  Global exectuion context
+    1) creation phase : Global memory (myFunction : uninitialized , fName:uninitialized)
+    2) exectuion Phase : executing line by line
+         1)error : Cannot access 'myFunction' before initialization
+         2)error : Cannot access 'fName' before initialization
+         5) function printed ()

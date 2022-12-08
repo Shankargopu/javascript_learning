@@ -1,0 +1,167 @@
+closures
+
+closure : 30-40%
+analyizing : 70-80%
+real time example : 100%
+
+1)function printFullName(firstName , lastName){
+    function printName(){
+      console.log(firstName, lastName)
+    }
+    return printFullName;
+ }
+ 
+ 2)const ans= printFullName("bhavani","shankar");
+ 3)ans();
+
+ in exectuion pahse:
+  Global exectuion context
+    pahse1) Global memory:
+                    window,
+                    this: window,
+                    printFullName : function,
+                    ans : uninitialized,
+    phase2) in execution phase line by line
+
+              callstack : global exectuion context
+                  1)function
+                  2) printFullName() will be called
+
+      from here the exectuion is shifted from global exectuion context to function exectution context
+              callstack : global exectuion context, function exectution context
+
+            function exectuion context: 
+              phase1) local memory : 
+                              
+                            arguments:['bhavani','shankar']
+                            firstName : bhavani,
+                            lastName : shankar
+                            printName : function
+            phase2) exectuion :
+                            i) printName : function
+                            ii) return function.
+            once it's return the function exectuion will be complted and removed from call stack. so the exectuion
+Moves to Global exectuion context.
+               2) ans will be initialized with returned function value
+               3) ans function will be called and printed bhavani shankar.
+
+ Here we can wonder how we are accessing the function printFullName local varaibles firstName, lastName
+ in the function printName()[As we are removing the printFullName() in call stack all it's local memory will also
+ be deleted]. when we are returning the function printName() it's not only return function.
+ but also it's lexical env varaibles along with the function. 
+                          This behaviour is known as closure.
+
+
+    
+
+1)function outerFunction() {
+  let counter = 0;
+  return function innerFunction() {
+    if (counter < 1) {
+      counter++;
+      console.log(`Hi you called me`);
+      return 
+    }
+    console.log("Hi you called me already");
+  };
+}
+
+2)const myFunction = outerFunction();
+3)myFunction(); //Hi you called me
+4)myFunction(); //Hi you called me already
+
+
+6)const myFunction2 = outerFunction();
+7)myFunction2(); //Hi you called me
+8)myFunction(); //Hi you called me already
+
+
+
+
+//analyzing above code:
+
+in exectuion phase : 
+   Global exectuion context : 
+    phase1) Global memory:
+               window,
+               this : window
+               outerFunction : function
+               myFunction : uninitialized
+               myFunction2 : uninitialized
+    phase2) exectuion :
+           1) outerFunction : function
+           2) outerFunction() called.
+
+    so the exectuion shifted from Global exectuion context to function exectuion context.
+
+    callstack : Global exectuion context , function exectuion context
+
+    in function execution context:
+    phase1) local memory:
+         araguments[...]
+         counter: uninitialized
+    pahse2) exectuion:
+        1) counter initialized to 0.
+        2) function returned (here normally the function returns with the lexical env. so with the counter value
+        it will return )
+  once returned the function will ne completed and removed from call stack
+
+  back to Global exectuion context.
+     2) line myFunction will be assigned with the returned function
+     3) myFunction() is called.
+
+     again the from global exectuion context to function exectuion context
+
+     in in function execution context:
+      pahse1) local memory:
+         araguments[...],
+     phase2) execution:
+         counter is 0, so if will be exectuted.  counter updated to 1 and returning.
+        
+   FEC ended and GEC started again.
+     4) myFunction() is called.
+    FEC added to the call stack.
+       pahse1) local memory:
+         araguments[...],
+     phase2) execution:
+         counter is 1, so else will be exectuted.  counter updated to 2 and returning.
+ 
+   FEC ended and GEC started again.
+    
+   5)  outerFunction() called.
+
+    so the exectuion shifted from Global exectuion context to function exectuion context.
+
+    callstack : Global exectuion context , function exectuion context
+
+    in function execution context:
+    phase1) local memory:
+         araguments[...]
+         counter: uninitialized
+    pahse2) exectuion:
+        1) counter initialized to 0.
+        2) function returned (here normally the function returns with the lexical env. so with the counter value
+        it will return )
+  once returned the function will ne completed and removed from call stack.
+
+ 5) returned function assigned to myFunction2. 
+ 6) myFunction2() is called.
+
+     again the from global exectuion context to function exectuion context
+
+     in in function execution context:
+      pahse1) local memory:
+         araguments[...],
+     phase2) execution:
+         counter is 0, so if will be exectuted.  counter updated to 1 and returning.
+7)myFunction2() is called.
+
+     again the from global exectuion context to function exectuion context
+
+     in in function execution context:
+      pahse1) local memory:
+         araguments[...],
+     phase2) execution:
+         counter is 1, so else will be exectuted.  counter updated to 2 and returning.
+
+         this how it works with the help of closures.

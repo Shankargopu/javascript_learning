@@ -1,0 +1,25 @@
+In head:
+<script src="./script.js"></script>
+
+- if we link this way, when exectuion come to this line html file, the html Parsing will be stopped and the script
+will start loading and once it's loaded it's start exectuing. so there are chances to get errors with improper
+Parsing.
+
+in body at last:
+<script src="./script.js"></script>
+- if we link the file at last, our pasrsing will be completed but it still it require time to load and exectuing.
+
+using async:
+<script src="./script.js" async></script>
+
+- By using this the js file will be loaded while html Parsing , but here once js file line exectuion started
+the js file will be loaded and Parsing will continue. But if, loading is completed before Parsing the pasrsing will
+be stopped and loaded js file will start exectuing which is not ideal and may result in error.
+
+using defer
+
+<script src="./script.js" defer></script>
+
+By using this the js file will be loaded while html Parsing , but here once js file line exectuion started
+the Parsing will not stop, and js will load and Parsing will also take place. only after Parsing completed
+the js file start exectuing

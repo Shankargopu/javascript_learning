@@ -1,0 +1,20 @@
+
+events behind the scenes.
+
+we know in call stack Global exectuion context will excute the code line by line.
+
+but what happens with events?
+
+as we know js is single thereaded, so it Cannot keep waiting till the event is triggered by the user. 
+so it will take the help of browser, in browser we have web Api environemnt, it helps our js engine it let know
+the js engine when the event is fired along with the event information.
+
+ if the events are triggered than it will keep the triggered events in callback queue, these events are ready to 
+ be executed.
+
+ between the callback queue and call stack we have one wonderful thing `event loop`
+  which monitor the call stack whether it is emptied or not. if the call stack emptied than eventloop places our
+  events which are in callback queue in the call stack and they will start executing.
+
+  -like this js will never waits and stops the exectuion for event to be triggered.
+

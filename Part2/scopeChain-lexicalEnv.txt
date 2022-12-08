@@ -1,0 +1,39 @@
+1)const lastName = "shankar";
+
+2)const printName = function () {
+  i)const firstName = "bhavani";
+  ii)console.log(firstName);
+  iii)console.log(lastName);
+};
+
+3)printName();
+
+
+Global exectuion context 
+
+pahse 1) Global memory : 
+                       window 
+                      this : window
+                      lastName : uninitialized,
+                      printName : uninitialized,
+
+    callstack : global exectuion context
+phase2) line by line:
+       
+          1) lastName will be initialized to "shankar" 
+          2) printName will be initialized to function
+          3) here the exectuion shifted from Global exectuion context to function exectuion context.
+
+
+        call stack : global exectuion context , function exectuion context   
+                    
+                function exectuion context :
+                 phase1) local memory : 
+                           araguments[...],
+                           firstName : uninitialized
+                pahse2) exectuion:
+                            i) firstName initialized to "bhavani"
+                            ii) bhavani will be printed
+                            iii) shankar will be printed (because the lastName value "shankar" already present in Global memory)
+                            
+

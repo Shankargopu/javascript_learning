@@ -1,0 +1,60 @@
+ in Global exectuion context 
+ 1) memory creation phase
+ 2) code exectuion phase
+
+ and also we have one call stack to maintain which exectuion context running.
+ //function execution context
+
+1)let foo = "foo";
+2)console.log(foo);
+3)function getFullName(firstName, lastName) {
+  i)console.log(arguments);
+  ii)let myVar = "var inside func";
+  iii)console.log(myVar);
+  iv)const fullName = firstName + " " + lastName;
+  v)return fullName;
+}
+4)const personName = getFullName("bhavani", "shankar");
+5)console.log(personName);
+
+1) In compilation pahse :
+            Global scope : foo,function, personName
+
+2) In exectuion pahse:
+     creation phase : Global exectuion context . 
+                    Global memory : window,this:window, foo: uninitialized ,getFullName:function, personName:uninitialized.
+     exectuion pahse (line by line):
+             1) foo : "foo"
+             2) "foo" will be printed
+             3)getFullName()
+             4) getFullName() ( we are calling the function here);
+
+ from 4th line another exectuion context will be created (function exectuion context). so the exectuion shifted
+ from Global exectuion context to function exectuion context.
+
+ in call stack: global exectuion context , function exectuion context.
+
+      In function exectuion context we have two phases:
+       1) local memory :  
+              arguments [....] (it's array like object)
+              firstName : bhavani,
+              lastName : shankar,
+              myVar : uninitialized,
+              fullName : uninitialized
+    TDZ(temporial dead zone) : This is the zone in which varaible stays uninitialized or we can say that the time 
+                                period before any varaible is assigned from uninitialized state of the varaible.
+        
+    In exectuion pahse : line by line
+         i){ '0': 'bhavani', '1': 'shankar' } ( it's an array like object []) 
+         ii) myVar will be initialized to "var inside func"
+         iii) myVar will be printed
+         iv) fullName = bhavani+ ''+shankar
+         v) return fullName
+
+    This fullName will be initialized to the personName which is present in Global exectuion context memory.
+    so, after this return statement the function exectuion context will be finished and it will be poppedup
+    from the call stack.
+   
+   again global exectuion context will start executing.so line by line
+         5) bhavani shankar
+
