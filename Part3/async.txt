@@ -1,0 +1,146 @@
+
+javascript is a synchronous  and
+single thereaded language. it excutes one line at a time line by line. it cannot execute next line
+until the previous line is completed.
+
+but we can make this language asynchronous by using functions setTimeout, setInterval ,promises etc.
+
+                      synchronous
+
+let us analyize the below code without setTimeout.
+
+ console.log("script start");
+ let num=0;
+ for(let i=0;i<=1000000;i++)
+ {
+   num+=i;
+ }
+
+ console.log(num)
+ console.log("script end");
+
+
+o/p will be : 
+script start
+500000500000
+script end
+
+Here in the above code the js will execute this line by line, so even if we have the for loop in middle 
+taking time , the js exectuion will stop for that time till for loop is finished and the value of num 
+will be printed followed by "script end".
+
+so here our code is getting blocked till the for loop is getting executed which is not ideal.
+
+
+                     asynchronous
+ 
+
+console.log("script start");
+let num=0;
+for(let i=0;i<=1000000;i++)
+{
+  num+=i;
+}
+
+setTimeout(()=>{
+console.log("from inside setTimeout");
+},0)
+
+console.log(num);
+console.log("script end");
+
+o/p : 
+500000500000
+script end
+from inside setTimeout
+
+Here in the above code the js will execute this line by line, it will excute till for loop and later it will 
+console the num and console the text "script end". lastly the from inside setTimeout will be printed. so, here our 
+js working asynchronusly. The code will not block at setTimeout line. 
+
+so how thses setTimeout's are working asynchronusly?
+
+- these setTimeout's are handled by the browser in webApi environemnt. Besides the JavaScript engine, the web 
+browser has other components such as Event Loop, Call Stack, and Web API.
+
+we know the JS engine contains callstack. so when the exectuion phase started the global exectuion context pushed
+into  the callstack and started exectuting each line by line.
+
+- when it is exectuting line by line, if it encounters setTimeout than the webApi starts counting the timer 
+of the setTimeout. so only after the timer expires the callback function will be placed in the call back 
+queue.
+
+- The eventloop which monitors the callstack and callback queue. so when the callstack is emptied i.e, when
+the previous execution completed than this callback function from callback queue will be placed in the 
+callstack than it will be executed.
+
+-so, like this the exectuion will happen asynchronusly.
+
+
+
+
+
+
+            In case of promises
+
+The promises also handled by the browser. it stores in microtask queue unlike call back used for setTimeout's or setInterval'script
+
+let analyize below promise code:
+
+
+
+console.log("script start");
+
+const bucket = ['coffee', 'chips', 'vegetables', 'salt', 'rice'];
+
+const friedRicePromise = new Promise((resolve, reject) => {
+    if (bucket.includes('vegetables') && bucket.includes('salt') && bucket.includes('rice')) {
+        resolve({Value:"Fried rice is on the way"})
+    }
+    else {
+        reject(new Error("Fried rice cannot be made"))
+    }
+});
+
+
+setTimeout(()=>{
+    console.log("Inside set Timeout")
+},0);
+
+//consuming the promise
+
+friedRicePromise.then((value) => {
+    console.log(value)
+}).catch((err)=>{
+    console.log(err)
+})
+
+let num=0
+for(let i=0;i<=10000;i++)
+{
+    num+=i;
+}
+console.log(num)
+console.log("script end!!");
+
+  In exectuion phase:
+       1) memory creation phase
+       bucket = undefined, friedRicePromise=undefined , num= undefined
+       2) executing line by line.
+       Global exectuion context created in callstack
+
+      printed 'script start'
+      bucket initialized with array.
+      friedRicePromise initialized with promise object
+      setTimeout will handled by the browser and callback function stored in callback queue.
+      .then() / .catch( [promise consuming] also handled by browser and it stores in microtask queue
+      num initialized with 0
+      for loop starts execute and num increased
+      num value will be printed
+      script end will be printed.
+
+      The global exectuion context finished exectuting. the eventloop monitors it and keep the microtask
+queue task in callstack and it started exectuting and the message '{Value :Fried rice is on the way will}' printed
+    
+     than callback queue taks will be placed on callstack and 'inside set Timeout' will printed.
+     
